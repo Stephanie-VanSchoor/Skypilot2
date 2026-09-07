@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✈️ SKY PILOT - Jeu + Boutique</title>
+    <title>✈️ SKY PILOT</title>
     <style>
-        /* ============================
-           STYLES GLOBAUX
-           ============================ */
+        /* TON STYLE EXISTANT (je le remets sans le modifier) */
         * {
             margin: 0;
             padding: 0;
@@ -22,9 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* ============================
-           LANDING PAGE (ACCUEIL)
-           ============================ */
         #home {
             display: flex;
             flex-direction: column;
@@ -112,9 +107,6 @@
             justify-content: center;
         }
 
-        /* ============================
-           SECTION JEU
-           ============================ */
         #game-section {
             display: none;
             flex-direction: column;
@@ -182,7 +174,7 @@
         #game-section .game-controls .btn-paypal-game:hover {
             background: #ff4444;
         }
-        
+
         #game-section .game-controls .btn-shop-game {
             background: #4CAF50;
             border-color: #4CAF50;
@@ -192,9 +184,6 @@
             background: #45a049;
         }
 
-        /* ============================
-           HUD (pendant le jeu)
-           ============================ */
         #hud {
             position: absolute;
             top: 20px;
@@ -221,9 +210,6 @@
             color: #ff6b6b;
         }
 
-        /* ============================
-           MODALE CLASSEMENT
-           ============================ */
         #modal {
             display: none;
             position: fixed;
@@ -298,9 +284,6 @@
             padding: 20px;
         }
 
-        /* ============================
-           MODALE BOUTIQUE (VIREMENT)
-           ============================ */
         #shop-modal {
             display: none;
             position: fixed;
@@ -416,9 +399,6 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* ============================
-           RESPONSIVE
-           ============================ */
         @media (max-width: 768px) {
             #home h1 {
                 font-size: 40px;
@@ -484,35 +464,22 @@
 </head>
 <body>
 
-    <!-- ============================
-    LANDING PAGE (ACCUEIL)
-    ============================ -->
+    <!-- ACCUEIL -->
     <section id="home">
         <div class="logo">✈️</div>
         <h1>SKY PILOT</h1>
-        <p>
-            Pilote ton avion, évite les obstacles, collecte des pièces<br>
-            et deviens le meilleur pilote du monde !
-        </p>
+        <p>Pilote ton avion, évite les obstacles, collecte des pièces<br>et deviens le meilleur pilote du monde !</p>
         <div class="buttons">
             <button class="btn-play" onclick="startGame()">🎮 Jouer</button>
-            <button class="btn-paypal" onclick="window.open('https://paypal.me/creatydesign?amount=5','_blank')">
-                ❤️ Soutenir (5€)
-            </button>
-            <button class="btn-play" onclick="openShop()" style="background: #4CAF50; box-shadow: 0 4px 30px rgba(76, 175, 80, 0.4);">🛒 Boutique</button>
+            <button class="btn-paypal" onclick="window.open('https://paypal.me/creatydesign?amount=5','_blank')">❤️ Soutenir (5€)</button>
+            <button class="btn-play" onclick="openShop()" style="background:#4CAF50;box-shadow:0 4px 30px rgba(76,175,80,0.4);">🛒 Boutique</button>
         </div>
     </section>
 
-    <!-- ============================
-    SECTION JEU
-    ============================ -->
+    <!-- JEU -->
     <section id="game-section">
         <div class="game-wrapper">
-            <div id="hud">
-                <div>🏆 SCORE <span id="score">0</span></div>
-                <div class="lives">❤️ <span id="lives">3</span></div>
-                <div>🪙 <span id="coins">0</span></div>
-            </div>
+            <div id="hud"><div>🏆 SCORE <span id="score">0</span></div><div class="lives">❤️ <span id="lives">3</span></div><div>🪙 <span id="coins">0</span></div></div>
             <canvas id="game" width="600" height="700"></canvas>
         </div>
         <div class="game-controls">
@@ -520,105 +487,38 @@
             <button onclick="resetGame()">🔄 Rejouer</button>
             <button onclick="showLeaderboard()">🏆 Classement</button>
             <button class="btn-shop-game" onclick="openShop()">🛒 Boutique</button>
-            <button class="btn-paypal-game" onclick="window.open('https://paypal.me/creatydesign?amount=5','_blank')">
-                ❤️ Soutenir (5€)
-            </button>
+            <button class="btn-paypal-game" onclick="window.open('https://paypal.me/creatydesign?amount=5','_blank')">❤️ Soutenir (5€)</button>
         </div>
     </section>
 
-    <!-- ============================
-    MODALE CLASSEMENT
-    ============================ -->
-    <div id="modal">
-        <div class="modal-box">
-            <h2>🏆 Classement</h2>
-            <div id="lbList"><div class="empty">Aucun score pour l'instant</div></div>
-            <button class="modal-close" onclick="closeModal()">Fermer</button>
-        </div>
-    </div>
+    <!-- CLASSEMENT -->
+    <div id="modal"><div class="modal-box"><h2>🏆 Classement</h2><div id="lbList"><div class="empty">Aucun score pour l'instant</div></div><button class="modal-close" onclick="closeModal()">Fermer</button></div></div>
 
-    <!-- ============================
-    MODALE BOUTIQUE (VIREMENT BANCAIRE)
-    ============================ -->
+    <!-- BOUTIQUE -->
     <div id="shop-modal">
         <div class="shop-box">
             <h2>✈️ SKY PILOT - Boutique</h2>
             <p class="sub">Choisissez votre avion, payez par virement bancaire</p>
-            
-            <div class="shop-item">
-                <div class="info">
-                    <div class="name">🛩️ Avion d'Or</div>
-                    <div class="desc">Fuselage doré et réacteurs orange</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <span class="price">2.99 €</span>
-                    <button class="btn-buy-shop" onclick="buyProduct('Avion d\'Or', '2.99')">Acheter</button>
-                </div>
-            </div>
-
-            <div class="shop-item">
-                <div class="info">
-                    <div class="name">🦅 Faucon Rouge</div>
-                    <div class="desc">Rapide, rouge et agressif</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <span class="price">2.99 €</span>
-                    <button class="btn-buy-shop" onclick="buyProduct('Faucon Rouge', '2.99')">Acheter</button>
-                </div>
-            </div>
-
-            <div class="shop-item">
-                <div class="info">
-                    <div class="name">🌙 Nuit Violette</div>
-                    <div class="desc">Style néon violet</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <span class="price">3.99 €</span>
-                    <button class="btn-buy-shop" onclick="buyProduct('Nuit Violette', '3.99')">Acheter</button>
-                </div>
-            </div>
-
-            <div class="shop-item">
-                <div class="info">
-                    <div class="name">🚀 Cyber Jet</div>
-                    <div class="desc">Avion futuriste premium</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <span class="price">4.99 €</span>
-                    <button class="btn-buy-shop" onclick="buyProduct('Cyber Jet', '4.99')">Acheter</button>
-                </div>
-            </div>
-
-            <div class="shop-item">
-                <div class="info">
-                    <div class="name">❤️ Soutien SKY PILOT</div>
-                    <div class="desc">Soutien au développement</div>
-                </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <span class="price">5.00 €</span>
-                    <button class="btn-buy-shop" onclick="buyProduct('Soutien', '5.00')">Acheter</button>
-                </div>
-            </div>
-
-            <div class="shop-iban">
-                <div class="label">💳 Effectuez votre virement vers :</div>
-                <div class="iban">BE80 9733 8252 3877</div>
-                <div style="margin-top:10px; color:#aaa; font-size:0.9em;">
-                    En communication : votre <strong>nom complet</strong> et le <strong>produit</strong>.
-                </div>
-            </div>
-
+            <div class="shop-item"><div class="info"><div class="name">🛩️ Avion d'Or</div><div class="desc">Fuselage doré et réacteurs orange</div></div><div style="display:flex;align-items:center;gap:10px;"><span class="price">2.99 €</span><button class="btn-buy-shop" onclick="buyProduct('Avion d\'Or','2.99')">Acheter</button></div></div>
+            <div class="shop-item"><div class="info"><div class="name">🦅 Faucon Rouge</div><div class="desc">Rapide, rouge et agressif</div></div><div style="display:flex;align-items:center;gap:10px;"><span class="price">2.99 €</span><button class="btn-buy-shop" onclick="buyProduct('Faucon Rouge','2.99')">Acheter</button></div></div>
+            <div class="shop-item"><div class="info"><div class="name">🌙 Nuit Violette</div><div class="desc">Style néon violet</div></div><div style="display:flex;align-items:center;gap:10px;"><span class="price">3.99 €</span><button class="btn-buy-shop" onclick="buyProduct('Nuit Violette','3.99')">Acheter</button></div></div>
+            <div class="shop-item"><div class="info"><div class="name">🚀 Cyber Jet</div><div class="desc">Avion futuriste premium</div></div><div style="display:flex;align-items:center;gap:10px;"><span class="price">4.99 €</span><button class="btn-buy-shop" onclick="buyProduct('Cyber Jet','4.99')">Acheter</button></div></div>
+            <div class="shop-item"><div class="info"><div class="name">❤️ Soutien SKY PILOT</div><div class="desc">Soutien au développement</div></div><div style="display:flex;align-items:center;gap:10px;"><span class="price">5.00 €</span><button class="btn-buy-shop" onclick="buyProduct('Soutien','5.00')">Acheter</button></div></div>
+            <div class="shop-iban"><div class="label">💳 Effectuez votre virement vers :</div><div class="iban">BE80 9733 8252 3877</div><div style="margin-top:10px;color:#aaa;font-size:0.9em;">En communication : votre <strong>nom complet</strong> et le <strong>produit</strong>.</div></div>
             <button class="btn-close-shop" onclick="closeShop()">✖ Fermer la boutique</button>
         </div>
     </div>
 
-    <!-- ============================
-    JAVASCRIPT
-    ============================ -->
     <script>
-        // ============================================================
-        // NAVIGATION
-        // ============================================================
+        // === CODE OBFUSQUÉ (version illisible mais fonctionnelle) ===
+        var _0x7a3b = ['\x6f\x70\x65\x6e', '\x68\x72\x65\x66', '\x6c\x6f\x63\x61\x74\x69\x6f\x6e', '\x6d\x61\x69\x6c\x74\x6f\x3a\x73\x6b\x79\x70\x69\x6c\x6f\x74\x32\x30\x32\x36\x40\x67\x6d\x61\x69\x6c\x2e\x63\x6f\x6d\x3f\x73\x75\x62\x6a\x65\x63\x74\x3d', '\x43\x6f\x6d\x6d\x61\x6e\x64\x65\x20', '\x26\x62\x6f\x64\x79\x3d', '\x42\x6f\x6e\x6a\x6f\x75\x72\x2c\x20\x6a\x65\x20\x76\x69\x65\x6e\x73\x20\x64\x27\x65\x66\x66\x65\x63\x74\x75\x65\x72\x20\x6c\x65\x20\x76\x69\x72\x65\x6d\x65\x6e\x74\x20\x64\x65\x20', '\x20\xe2\x82\xac\x20\x70\x6f\x75\x72\x20\x61\x63\x68\x65\x74\x65\x72\x20\x3a\x20', '\x2e\x0a\x0a\x4d\x6f\x6e\x20\x6e\x6f\x6d\x20\x63\x6f\x6d\x70\x6c\x65\x74\x20\x3a\x20\x0a\x4d\x6f\x6e\x20\x65\x6d\x61\x69\x6c\x20\x3a\x20\x0a\x0a\x49\x42\x41\x4e\x20\x3a\x20\x42\x45\x38\x30\x20\x39\x37\x33\x33\x20\x38\x32\x35\x32\x20\x33\x38\x37\x37', '\x61\x6c\x65\x72\x74', '\xef\xbf\xa1\x20\x50\x72\x69\x78\x20\x3a\x20', '\x20\xe2\x82\xac\x0a\xf0\x9f\x8f\xa6\x20\x49\x42\x41\x4e\x20\x3a\x20\x42\x45\x38\x30\x20\x39\x37\x33\x33\x20\x38\x32\x35\x32\x20\x33\x38\x37\x37\x0a\x0a\xf0\x9f\x93\xa7\x20\x45\x6e\x76\x6f\x79\x65\x7a\x20\x75\x6e\x20\x65\x6d\x61\x69\x6c\x20\xc3\xa0\x20\x73\x6b\x79\x70\x69\x6c\x6f\x74\x32\x30\x32\x36\x40\x67\x6d\x61\x69\x6c\x2e\x63\x6f\x6d\x20\x61\x76\x65\x63\x20\x76\x6f\x74\x72\x65\x20\x6e\x6f\x6d\x20\x65\x74\x20\x6c\x61\x20\x70\x72\x65\x75\x76\x65\x20\x64\x65\x20\x76\x69\x72\x65\x6d\x65\x6e\x74\x2e'];
+        function buyProduct(product, price) {
+            var subject = _0x7a3b[4] + product;
+            var body = _0x7a3b[6] + price + _0x7a3b[7] + product + _0x7a3b[8];
+            window[_0x7a3b[2]][_0x7a3b[1]] = _0x7a3b[3] + encodeURIComponent(subject) + _0x7a3b[5] + encodeURIComponent(body);
+            alert(_0x7a3b[10] + price + _0x7a3b[11]);
+        }
+
         function startGame() {
             document.getElementById('home').style.display = 'none';
             document.getElementById('game-section').classList.add('visible');
@@ -630,57 +530,20 @@
             document.getElementById('game-section').classList.remove('visible');
         }
 
-        function showLeaderboard() {
-            renderLB();
-            document.getElementById('modal').classList.add('open');
-        }
+        function showLeaderboard() { renderLB();
+            document.getElementById('modal').classList.add('open'); }
 
-        function closeModal() {
-            document.getElementById('modal').classList.remove('open');
-        }
+        function closeModal() { document.getElementById('modal').classList.remove('open'); }
+        document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
-        // Fermer la modale en cliquant à côté
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
+        function openShop() { document.getElementById('shop-modal').classList.add('open'); }
 
-        // ============================================================
-        // BOUTIQUE (VIREMENT)
-        // ============================================================
-        function openShop() {
-            document.getElementById('shop-modal').classList.add('open');
-        }
+        function closeShop() { document.getElementById('shop-modal').classList.remove('open'); }
+        document.getElementById('shop-modal').addEventListener('click', function(e) { if (e.target === this) closeShop(); });
 
-        function closeShop() {
-            document.getElementById('shop-modal').classList.remove('open');
-        }
+        function getLB() { try { return JSON.parse(localStorage.getItem('sky_pilot_lb')) || []; } catch (e) { return []; } }
 
-        // Fermer la boutique en cliquant à côté
-        document.getElementById('shop-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeShop();
-        });
-
-        function buyProduct(product, price) {
-            const subject = `Commande ${product}`;
-            const body = `Bonjour, je viens d'effectuer le virement de ${price} € pour acheter : ${product}.%0D%0A%0D%0AMon nom complet : %0D%0AMon email : %0D%0A%0D%0AIBAN : BE80 9733 8252 3877`;
-            window.location.href = `mailto:skypilot2026@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-            alert(`💰 Prix : ${price} €\n🏦 IBAN : BE80 9733 8252 3877\n\n📧 Envoyez un email à skypilot2026@gmail.com avec votre nom et la preuve de virement.`);
-        }
-
-        // ============================================================
-        // CLASSEMENT (localStorage)
-        // ============================================================
-        function getLB() {
-            try {
-                return JSON.parse(localStorage.getItem('sky_pilot_lb')) || [];
-            } catch (e) {
-                return [];
-            }
-        }
-
-        function saveLB(data) {
-            localStorage.setItem('sky_pilot_lb', JSON.stringify(data));
-        }
+        function saveLB(data) { localStorage.setItem('sky_pilot_lb', JSON.stringify(data)); }
 
         function addScore(name, score, coins) {
             var lb = getLB();
@@ -694,55 +557,31 @@
         function renderLB() {
             var lb = getLB();
             var list = document.getElementById('lbList');
-            if (lb.length === 0) {
-                list.innerHTML = '<div class="empty">Aucun score pour l\'instant</div>';
-                return;
-            }
+            if (lb.length === 0) { list.innerHTML = '<div class="empty">Aucun score pour l\'instant</div>'; return; }
             var html = '';
             for (var i = 0; i < lb.length; i++) {
                 var rank = i + 1;
                 var medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#' + rank;
-                html += '<div class="lb-item">' +
-                    '<span class="rank">' + medal + '</span>' +
-                    '<span>' + lb[i].name + '</span>' +
-                    '<span class="score">' + lb[i].score + ' 🪙' + (lb[i].coins || 0) + '</span>' +
-                    '</div>';
+                html += '<div class="lb-item"><span class="rank">' + medal + '</span><span>' + lb[i].name + '</span><span class="score">' + lb[i].score + ' 🪙' + (lb[i].coins || 0) + '</span></div>';
             }
             list.innerHTML = html;
         }
 
-        // ============================================================
-        // JEU
-        // ============================================================
         var canvas = document.getElementById('game');
         var ctx = canvas.getContext('2d');
-
-        // ---- JOUEUR ----
-        var player = {
-            x: 275,
-            y: 600,
-            w: 50,
-            h: 50,
-            speed: 5
-        };
-
-        // ---- VARIABLES ----
-        var obstacles = [];
-        var coins = [];
-        var particles = [];
-        var score = 0;
-        var lives = 3;
-        var coinCount = 0;
-        var gameRunning = true;
-        var frameCount = 0;
-        var spawnRate = 45;
-
-        // ---- CONTRÔLES CLAVIER ----
+        var player = { x: 275, y: 600, w: 50, h: 50, speed: 5 };
+        var obstacles = [],
+            coins = [],
+            particles = [];
+        var score = 0,
+            lives = 3,
+            coinCount = 0,
+            gameRunning = true,
+            frameCount = 0,
+            spawnRate = 45;
         var keys = {};
         document.addEventListener('keydown', function(e) { keys[e.key] = true; });
         document.addEventListener('keyup', function(e) { keys[e.key] = false; });
-
-        // ---- CONTRÔLES SOURIS ----
         var mouseX = null;
         canvas.addEventListener('mousemove', function(e) {
             var rect = canvas.getBoundingClientRect();
@@ -750,8 +589,6 @@
             mouseX = (e.clientX - rect.left) * scaleX;
         });
         canvas.addEventListener('mouseleave', function() { mouseX = null; });
-
-        // ---- CONTRÔLES TACTILE ----
         var touchX = null;
         canvas.addEventListener('touchmove', function(e) {
             e.preventDefault();
@@ -761,29 +598,15 @@
         });
         canvas.addEventListener('touchend', function() { touchX = null; });
 
-        // ---- FONCTIONS ----
         function spawnObstacle() {
             var w = 20 + Math.random() * 30;
             var x = Math.random() * (canvas.width - w);
-            obstacles.push({
-                x: x,
-                y: -40,
-                w: w,
-                h: 20 + Math.random() * 20,
-                speed: 2 + Math.random() * 1.5,
-                color: 'hsl(' + (Math.random() * 60 + 340) + ', 80%, 60%)'
-            });
+            obstacles.push({ x: x, y: -40, w: w, h: 20 + Math.random() * 20, speed: 2 + Math.random() * 1.5, color: 'hsl(' + (Math.random() * 60 + 340) + ', 80%, 60%)' });
         }
 
         function spawnCoin() {
             var x = 20 + Math.random() * (canvas.width - 40);
-            coins.push({
-                x: x,
-                y: -20,
-                size: 12,
-                speed: 2 + Math.random() * 1,
-                collected: false
-            });
+            coins.push({ x: x, y: -20, size: 12, speed: 2 + Math.random() * 1, collected: false });
         }
 
         function spawnParticles(x, y, color, count) {
@@ -791,16 +614,7 @@
             for (var i = 0; i < count; i++) {
                 var angle = Math.random() * Math.PI * 2;
                 var speed = 1 + Math.random() * 4;
-                particles.push({
-                    x: x,
-                    y: y,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed - 1,
-                    life: 20 + Math.random() * 25,
-                    maxLife: 45,
-                    size: 2 + Math.random() * 4,
-                    color: color
-                });
+                particles.push({ x: x, y: y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 1, life: 20 + Math.random() * 25, maxLife: 45, size: 2 + Math.random() * 4, color: color });
             }
         }
 
@@ -819,11 +633,8 @@
             document.getElementById('lives').textContent = '3';
             document.getElementById('coins').textContent = '0';
         }
-
-        // Exposer resetGame globalement
         window.resetGame = resetGame;
 
-        // ---- REDIMENSIONNEMENT ----
         function resizeCanvas() {
             var wrapper = canvas.parentElement;
             var wrapperWidth = wrapper.clientWidth || 600;
@@ -833,84 +644,48 @@
             canvas.style.width = displayWidth + 'px';
             canvas.style.height = displayHeight + 'px';
         }
-
         window.addEventListener('resize', resizeCanvas);
         window.resizeCanvas = resizeCanvas;
 
-        // ---- BOUCLE DE JEU ----
         function update() {
             if (!gameRunning) return;
             frameCount++;
-
-            // Déplacement clavier
             if (keys['ArrowLeft'] || keys['a']) player.x -= player.speed;
             if (keys['ArrowRight'] || keys['d']) player.x += player.speed;
             if (keys['ArrowUp'] || keys['w']) player.y -= player.speed * 0.7;
             if (keys['ArrowDown'] || keys['s']) player.y += player.speed * 0.7;
-
-            // Déplacement souris
-            if (mouseX !== null) {
-                var diff = mouseX - player.x - player.w / 2;
-                player.x += diff * 0.12;
-            }
-
-            // Déplacement tactile
-            if (touchX !== null) {
-                var diff2 = touchX - player.x - player.w / 2;
-                player.x += diff2 * 0.12;
-            }
-
-            // Limites
+            if (mouseX !== null) { var diff = mouseX - player.x - player.w / 2;
+                player.x += diff * 0.12; }
+            if (touchX !== null) { var diff2 = touchX - player.x - player.w / 2;
+                player.x += diff2 * 0.12; }
             player.x = Math.max(0, Math.min(canvas.width - player.w, player.x));
             player.y = Math.max(0, Math.min(canvas.height - player.h, player.y));
-
-            // Spawn
             if (frameCount % spawnRate === 0) spawnObstacle();
             if (frameCount % (spawnRate * 2) === 0) spawnCoin();
-
-            // Obstacles
             for (var i = obstacles.length - 1; i >= 0; i--) {
                 var o = obstacles[i];
                 o.y += o.speed;
-
-                // Collision
-                if (o.y + o.h > player.y && o.y < player.y + player.h &&
-                    o.x + o.w > player.x && o.x < player.x + player.w) {
+                if (o.y + o.h > player.y && o.y < player.y + player.h && o.x + o.w > player.x && o.x < player.x + player.w) {
                     spawnParticles(player.x + player.w / 2, player.y + player.h / 2, '#ff4444', 20);
                     lives--;
                     document.getElementById('lives').textContent = lives;
                     obstacles.splice(i, 1);
-
                     if (lives <= 0) {
                         gameRunning = false;
                         if (score > 0) {
                             var name = prompt('🏆 Score: ' + score + ' | 🪙 ' + coinCount + '\nTon pseudo :', 'PILOTE');
-                            if (name && name.trim()) {
-                                addScore(name.trim().toUpperCase(), score, coinCount);
-                            } else {
-                                addScore('ANON', score, coinCount);
-                            }
+                            if (name && name.trim()) { addScore(name.trim().toUpperCase(), score, coinCount); } else { addScore('ANON', score, coinCount); }
                         }
                     }
                     continue;
                 }
-
-                if (o.y > canvas.height) {
-                    obstacles.splice(i, 1);
-                    if (gameRunning) {
-                        score++;
-                        document.getElementById('score').textContent = score;
-                    }
-                }
+                if (o.y > canvas.height) { obstacles.splice(i, 1); if (gameRunning) { score++;
+                        document.getElementById('score').textContent = score; } }
             }
-
-            // Pièces
             for (var j = coins.length - 1; j >= 0; j--) {
                 var c = coins[j];
                 c.y += c.speed;
-
-                if (!c.collected && c.y + c.size > player.y && c.y < player.y + player.h &&
-                    c.x + c.size > player.x && c.x < player.x + player.w) {
+                if (!c.collected && c.y + c.size > player.y && c.y < player.y + player.h && c.x + c.size > player.x && c.x < player.x + player.w) {
                     c.collected = true;
                     coinCount++;
                     document.getElementById('coins').textContent = coinCount;
@@ -918,13 +693,8 @@
                     coins.splice(j, 1);
                     continue;
                 }
-
-                if (c.y > canvas.height) {
-                    coins.splice(j, 1);
-                }
+                if (c.y > canvas.height) { coins.splice(j, 1); }
             }
-
-            // Particules
             for (var k = particles.length - 1; k >= 0; k--) {
                 var p = particles[k];
                 p.x += p.vx;
@@ -936,15 +706,12 @@
         }
 
         function draw() {
-            // Fond
             var grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
             grad.addColorStop(0, '#0a1628');
             grad.addColorStop(0.5, '#1a2a5a');
             grad.addColorStop(1, '#2a4a7a');
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Étoiles
             for (var i = 0; i < 30; i++) {
                 var x = (i * 137 + i * 23) % canvas.width;
                 var y = (i * 89 + frameCount * 0.2 + i * 7) % canvas.height;
@@ -953,8 +720,6 @@
                 ctx.arc(x, y, 0.5 + Math.sin(i + Date.now() * 0.002) * 0.3 + 0.5, 0, Math.PI * 2);
                 ctx.fill();
             }
-
-            // Lignes de vol
             ctx.strokeStyle = 'rgba(255,255,255,0.03)';
             ctx.lineWidth = 2;
             for (var l = 0; l < 15; l++) {
@@ -964,8 +729,6 @@
                 ctx.lineTo(canvas.width, yy);
                 ctx.stroke();
             }
-
-            // Pièces
             for (var c = 0; c < coins.length; c++) {
                 var coin = coins[c];
                 ctx.shadowColor = '#ffdd44';
@@ -981,8 +744,6 @@
                 ctx.textBaseline = 'middle';
                 ctx.fillText('$', coin.x, coin.y + 1);
             }
-
-            // Obstacles
             for (var o = 0; o < obstacles.length; o++) {
                 var obs = obstacles[o];
                 ctx.shadowColor = obs.color;
@@ -1006,8 +767,6 @@
                 ctx.lineWidth = 1;
                 ctx.strokeRect(obs.x, obs.y, obs.w, obs.h);
             }
-
-            // Particules
             for (var p = 0; p < particles.length; p++) {
                 var part = particles[p];
                 var alpha = part.life / part.maxLife;
@@ -1021,46 +780,32 @@
             }
             ctx.globalAlpha = 1;
             ctx.shadowBlur = 0;
-
-            // ---- AVION ----
             var px = player.x,
                 py = player.y,
                 pw = player.w,
                 ph = player.h;
-
-            // Effet lumineux
             var glow = ctx.createRadialGradient(px + pw / 2, py + ph / 2, 5, px + pw / 2, py + ph / 2, 50);
             glow.addColorStop(0, 'rgba(100, 200, 255, 0.05)');
             glow.addColorStop(1, 'rgba(100, 200, 255, 0)');
             ctx.fillStyle = glow;
             ctx.fillRect(px - 30, py - 25, pw + 60, ph + 50);
-
-            // Corps
             ctx.shadowColor = 'rgba(100, 200, 255, 0.15)';
             ctx.shadowBlur = 20;
             ctx.fillStyle = '#ffffff';
             ctx.beginPath();
             ctx.ellipse(px + pw / 2, py + ph / 2 - 5, 20, 15, 0, 0, Math.PI * 2);
             ctx.fill();
-
-            // Ailes
             ctx.shadowBlur = 10;
             ctx.fillStyle = '#ff6b6b';
             ctx.fillRect(px - 8, py + 10, 20, 8);
             ctx.fillRect(px + 38, py + 10, 20, 8);
-
-            // Queue
             ctx.fillStyle = '#ffd93d';
             ctx.fillRect(px + 15, py + 32, 20, 6);
-
-            // Cockpit
             ctx.shadowBlur = 0;
             ctx.fillStyle = 'rgba(100, 200, 255, 0.4)';
             ctx.beginPath();
             ctx.ellipse(px + 25, py + 5, 10, 8, 0, 0, Math.PI * 2);
             ctx.fill();
-
-            // Hélice
             ctx.fillStyle = 'rgba(200, 200, 200, 0.3)';
             var rot = frameCount * 0.5;
             ctx.save();
@@ -1069,8 +814,6 @@
             ctx.fillRect(-12, -2, 24, 3);
             ctx.fillRect(-2, -12, 3, 24);
             ctx.restore();
-
-            // Lumières
             ctx.shadowBlur = 15;
             ctx.fillStyle = '#ff0000';
             ctx.shadowColor = '#ff0000';
@@ -1083,8 +826,6 @@
             ctx.arc(px + 47, py + 10, 3, 0, Math.PI * 2);
             ctx.fill();
             ctx.shadowBlur = 0;
-
-            // GAME OVER
             if (!gameRunning) {
                 ctx.fillStyle = 'rgba(0,0,0,0.6)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1104,25 +845,18 @@
             }
         }
 
-        function gameLoop() {
-            update();
+        function gameLoop() { update();
             draw();
-            requestAnimationFrame(gameLoop);
-        }
-
-        // ============================================================
-        // LANCEMENT
-        // ============================================================
+            requestAnimationFrame(gameLoop); }
         renderLB();
         resizeCanvas();
         gameLoop();
-
         console.log('✈️ SKY PILOT - Jeu + Boutique Virement');
         console.log('❤️ PayPal Dons: https://paypal.me/creatydesign');
         console.log('🏦 IBAN Virement: BE80 9733 8252 3877');
         console.log('🖱️ Souris pour diriger l\'avion');
         console.log('⌨️ Flèches ou WASD pour diriger');
     </script>
-
 </body>
 </html>
+               
