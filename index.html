@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✈️ SKY PILOT - Jeu + Boutique</title>
+    <style>
+        /* ============================
+           STYLES GLOBAUX
+           ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ============================
+           LANDING PAGE (ACCUEIL)
+           ============================ */
+        #home {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a2a5a 100%);
+            position: relative;
+        }
+
+        #home .logo {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        #home h1 {
+            font-size: 72px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 30%, #ffdd44 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        #home p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 550px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        #home .btn-play {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            border: none;
+            padding: 16px 50px;
+            border-radius: 60px;
+            font-size: 22px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 30px rgba(238, 90, 36, 0.4);
+        }
+
+        #home .btn-play:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 40px rgba(238, 90, 36, 0.6);
+        }
+
+        #home .btn-paypal {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-left: 12px;
+        }
+
+        #home .btn-paypal:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        #home .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* ============================
+           SECTION JEU
+           ============================ */
+        #game-section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: #0a0a1a;
+        }
+
+        #game-section.visible {
+            display: flex;
+        }
+
+        #game-section .game-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(0, 100, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #0a1628;
+        }
+
+        #game-section .game-wrapper canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 600 / 700;
+            background: #0a1628;
+            touch-action: none;
+        }
+
+        #game-section .game-controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #game-section .game-controls button {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        #game-section .game-controls button:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        #game-section .game-controls .btn-paypal-game {
+            background: #ff6b6b;
+            border-color: #ff6b6b;
+        }
+
+        #game-section .game-controls .btn-paypal-game:hover {
+            background: #ff4444;
+        }
+        
+        #game-section .game-controls .btn-shop-game {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        #game-section .game-controls .btn-shop-game:hover {
+            background: #45a049;
+        }
+
+        /* ============================
+           HUD (pendant le jeu)
+           ============================ */
+        #hud {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 25px;
+            border-radius: 30px;
+            display: flex;
+            gap: 30px;
+            font-weight: bold;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        #hud span {
+            color: #ffdd44;
+        }
+
+        #hud .lives span {
+            color: #ff6b6b;
+        }
+
+        /* ============================
+           MODALE CLASSEMENT
+           ============================ */
+        #modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(16px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #modal.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background: rgba(10, 25, 50, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 92%;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-box h2 {
+            text-align: center;
+            color: #ffdd44;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .lb-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .lb-item .rank {
+            color: #88ccff;
+            font-weight: bold;
+        }
+
+        .lb-item .score {
+            color: #ffdd44;
+            font-weight: bold;
+        }
+
+        .modal-close {
+            display: block;
+            margin: 20px auto 0;
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            color: #fff;
+            padding: 8px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .empty {
+            text-align: center;
+            color: #8899aa;
+            padding: 20px;
+        }
+
+        /* ============================
+           MODALE BOUTIQUE (VIREMENT)
+           ============================ */
+        #shop-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(16px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #shop-modal.open {
+            display: flex;
+        }
+
+        .shop-box {
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid #f5c842;
+            color: #fff;
+        }
+
+        .shop-box h2 {
+            text-align: center;
+            color: #f5c842;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .shop-box .sub {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .shop-item {
+            background: #0d0d1a;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #2a2a4e;
+        }
+        .shop-item .info {
+            text-align: left;
+        }
+        .shop-item .info .name {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .shop-item .info .desc {
+            font-size: 0.85em;
+            color: #aaa;
+        }
+        .shop-item .price {
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 15px;
+        }
+        .shop-item .btn-buy-shop {
+            background: #f5c842;
+            border: none;
+            color: #0a0a1a;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .shop-item .btn-buy-shop:hover {
+            background: #ffd966;
+        }
+
+        .shop-iban {
+            margin-top: 20px;
+            text-align: center;
+            background: #0d0d1a;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #4CAF50;
+        }
+        .shop-iban .label {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        .shop-iban .iban {
+            font-size: 1.8em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .btn-close-shop {
+            display: block;
+            margin: 20px auto 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
+        }
+        .btn-close-shop:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ============================
+           RESPONSIVE
+           ============================ */
+        @media (max-width: 768px) {
+            #home h1 {
+                font-size: 40px;
+            }
+            #home .logo {
+                font-size: 60px;
+            }
+            #home p {
+                font-size: 16px;
+                padding: 0 10px;
+            }
+            #home .btn-play {
+                font-size: 18px;
+                padding: 14px 35px;
+            }
+            #home .btn-paypal {
+                font-size: 16px;
+                padding: 12px 30px;
+            }
+            #hud {
+                font-size: 14px;
+                padding: 8px 18px;
+                gap: 16px;
+                top: 10px;
+            }
+            #game-section .game-controls button {
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+            .shop-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            .shop-item .price {
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #home h1 {
+                font-size: 30px;
+            }
+            #home .logo {
+                font-size: 45px;
+            }
+            #home .btn-play {
+                font-size: 16px;
+                padding: 12px 28px;
+            }
+            #home .btn-paypal {
+                font-size: 14px;
+                padding: 10px 24px;
+            }
+            #hud {
+                font-size: 12px;
+                padding: 6px 14px;
+                gap: 12px;
+                top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================
+    LANDING PAGE (ACCUEIL)
+    ============================ -->
+    <section id="home">
+        <div class="logo">✈️</div>
+        <h1>SKY PILOT</h1>
+        <p>
+            Pilote ton avion, évite les obstacles, collecte des pièces<br>
+            et deviens le meilleur pilote du monde !
+        </p>
+        <div class="buttons">
+            <button class="btn-play" onclick="startGame()">🎮 Jouer</button>
+            <button class="btn-paypal" onclick="window.open('https://paypal.me/creatydesign?amount=5','_blank')">
+                ❤️ Soutenir (5€)
+            </button>
+            <button class="btn-play" onclick="openShop()" style="background: #4CAF50; box-shadow: 0 4px 30px rgba(76, 175, 80, 0.4);">🛒 Boutique</button>
+        </div>
+    </section>
+
+    <!-- ============================
+    SECTION JEU
+    ============================ -->
+    <section id="game-section">
+        <div class="game-wrapper">
+            <div id="hud">
+                <div>🏆 SCORE <span id="score">0</span></div>
+                <div class="lives">❤️ <span id="lives">3</span></div>
+                <div>🪙 <span id="coins">0</span></div>
+            </div>
+            <canvas id="game" width="600" height="700"></canvas>
+        </div>
+        <div class="game-controls">
+            <button onclick="goHome()">🏠 Accueil</button>
+            <button onclick="resetGame()">🔄 Rejouer</button>
+            <button onclick="showLeaderboard()">🏆 Classement</button>
+            <button class="btn-shop-game" onclick="openShop()">🛒 Boutique</button>
+            <button class="btn-paypal-game" onclick="window.open('https://paypal.me/creatydesign?amount=5','_blank')">
+                ❤️ Soutenir (5€)
+            </button>
+        </div>
+    </section>
+
+    <!-- ============================
+    MODALE CLASSEMENT
+    ============================ -->
+    <div id="modal">
+        <div class="modal-box">
+            <h2>🏆 Classement</h2>
+            <div id="lbList"><div class="empty">Aucun score pour l'instant</div></div>
+            <button class="modal-close" onclick="closeModal()">Fermer</button>
+        </div>
+    </div>
+
+    <!-- ============================
+    MODALE BOUTIQUE (VIREMENT BANCAIRE)
+    ============================ -->
+    <div id="shop-modal">
+        <div class="shop-box">
+            <h2>✈️ SKY PILOT - Boutique</h2>
+            <p class="sub">Choisissez votre avion, payez par virement bancaire</p>
+            
+            <div class="shop-item">
+                <div class="info">
+                    <div class="name">🛩️ Avion d'Or</div>
+                    <div class="desc">Fuselage doré et réacteurs orange</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="price">2.99 €</span>
+                    <button class="btn-buy-shop" onclick="buyProduct('Avion d\'Or', '2.99')">Acheter</button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <div class="info">
+                    <div class="name">🦅 Faucon Rouge</div>
+                    <div class="desc">Rapide, rouge et agressif</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="price">2.99 €</span>
+                    <button class="btn-buy-shop" onclick="buyProduct('Faucon Rouge', '2.99')">Acheter</button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <div class="info">
+                    <div class="name">🌙 Nuit Violette</div>
+                    <div class="desc">Style néon violet</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="price">3.99 €</span>
+                    <button class="btn-buy-shop" onclick="buyProduct('Nuit Violette', '3.99')">Acheter</button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <div class="info">
+                    <div class="name">🚀 Cyber Jet</div>
+                    <div class="desc">Avion futuriste premium</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="price">4.99 €</span>
+                    <button class="btn-buy-shop" onclick="buyProduct('Cyber Jet', '4.99')">Acheter</button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <div class="info">
+                    <div class="name">❤️ Soutien SKY PILOT</div>
+                    <div class="desc">Soutien au développement</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span class="price">5.00 €</span>
+                    <button class="btn-buy-shop" onclick="buyProduct('Soutien', '5.00')">Acheter</button>
+                </div>
+            </div>
+
+            <div class="shop-iban">
+                <div class="label">💳 Effectuez votre virement vers :</div>
+                <div class="iban">BE80 9733 8252 3877</div>
+                <div style="margin-top:10px; color:#aaa; font-size:0.9em;">
+                    En communication : votre <strong>nom complet</strong> et le <strong>produit</strong>.
+                </div>
+            </div>
+
+            <button class="btn-close-shop" onclick="closeShop()">✖ Fermer la boutique</button>
+        </div>
+    </div>
+
+    <!-- ============================
+    JAVASCRIPT
+    ============================ -->
+    <script>
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        function startGame() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('game-section').classList.add('visible');
+            setTimeout(resizeCanvas, 100);
+        }
+
+        function goHome() {
+            document.getElementById('home').style.display = 'flex';
+            document.getElementById('game-section').classList.remove('visible');
+        }
+
+        function showLeaderboard() {
+            renderLB();
+            document.getElementById('modal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('open');
+        }
+
+        // Fermer la modale en cliquant à côté
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // ============================================================
+        // BOUTIQUE (VIREMENT)
+        // ============================================================
+        function openShop() {
+            document.getElementById('shop-modal').classList.add('open');
+        }
+
+        function closeShop() {
+            document.getElementById('shop-modal').classList.remove('open');
+        }
+
+        // Fermer la boutique en cliquant à côté
+        document.getElementById('shop-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeShop();
+        });
+
+        function buyProduct(product, price) {
+            const subject = `Commande ${product}`;
+            const body = `Bonjour, je viens d'effectuer le virement de ${price} € pour acheter : ${product}.%0D%0A%0D%0AMon nom complet : %0D%0AMon email : %0D%0A%0D%0AIBAN : BE80 9733 8252 3877`;
+            window.location.href = `mailto:skypilot2026@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+            alert(`💰 Prix : ${price} €\n🏦 IBAN : BE80 9733 8252 3877\n\n📧 Envoyez un email à skypilot2026@gmail.com avec votre nom et la preuve de virement.`);
+        }
+
+        // ============================================================
+        // CLASSEMENT (localStorage)
+        // ============================================================
+        function getLB() {
+            try {
+                return JSON.parse(localStorage.getItem('sky_pilot_lb')) || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveLB(data) {
+            localStorage.setItem('sky_pilot_lb', JSON.stringify(data));
+        }
+
+        function addScore(name, score, coins) {
+            var lb = getLB();
+            lb.push({ name: name, score: score, coins: coins });
+            lb.sort(function(a, b) { return b.score - a.score; });
+            if (lb.length > 20) lb.length = 20;
+            saveLB(lb);
+            renderLB();
+        }
+
+        function renderLB() {
+            var lb = getLB();
+            var list = document.getElementById('lbList');
+            if (lb.length === 0) {
+                list.innerHTML = '<div class="empty">Aucun score pour l\'instant</div>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < lb.length; i++) {
+                var rank = i + 1;
+                var medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#' + rank;
+                html += '<div class="lb-item">' +
+                    '<span class="rank">' + medal + '</span>' +
+                    '<span>' + lb[i].name + '</span>' +
+                    '<span class="score">' + lb[i].score + ' 🪙' + (lb[i].coins || 0) + '</span>' +
+                    '</div>';
+            }
+            list.innerHTML = html;
+        }
+
+        // ============================================================
+        // JEU
+        // ============================================================
+        var canvas = document.getElementById('game');
+        var ctx = canvas.getContext('2d');
+
+        // ---- JOUEUR ----
+        var player = {
+            x: 275,
+            y: 600,
+            w: 50,
+            h: 50,
+            speed: 5
+        };
+
+        // ---- VARIABLES ----
+        var obstacles = [];
+        var coins = [];
+        var particles = [];
+        var score = 0;
+        var lives = 3;
+        var coinCount = 0;
+        var gameRunning = true;
+        var frameCount = 0;
+        var spawnRate = 45;
+
+        // ---- CONTRÔLES CLAVIER ----
+        var keys = {};
+        document.addEventListener('keydown', function(e) { keys[e.key] = true; });
+        document.addEventListener('keyup', function(e) { keys[e.key] = false; });
+
+        // ---- CONTRÔLES SOURIS ----
+        var mouseX = null;
+        canvas.addEventListener('mousemove', function(e) {
+            var rect = canvas.getBoundingClientRect();
+            var scaleX = canvas.width / rect.width;
+            mouseX = (e.clientX - rect.left) * scaleX;
+        });
+        canvas.addEventListener('mouseleave', function() { mouseX = null; });
+
+        // ---- CONTRÔLES TACTILE ----
+        var touchX = null;
+        canvas.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            var rect = canvas.getBoundingClientRect();
+            var scaleX = canvas.width / rect.width;
+            touchX = (e.touches[0].clientX - rect.left) * scaleX;
+        });
+        canvas.addEventListener('touchend', function() { touchX = null; });
+
+        // ---- FONCTIONS ----
+        function spawnObstacle() {
+            var w = 20 + Math.random() * 30;
+            var x = Math.random() * (canvas.width - w);
+            obstacles.push({
+                x: x,
+                y: -40,
+                w: w,
+                h: 20 + Math.random() * 20,
+                speed: 2 + Math.random() * 1.5,
+                color: 'hsl(' + (Math.random() * 60 + 340) + ', 80%, 60%)'
+            });
+        }
+
+        function spawnCoin() {
+            var x = 20 + Math.random() * (canvas.width - 40);
+            coins.push({
+                x: x,
+                y: -20,
+                size: 12,
+                speed: 2 + Math.random() * 1,
+                collected: false
+            });
+        }
+
+        function spawnParticles(x, y, color, count) {
+            count = count || 15;
+            for (var i = 0; i < count; i++) {
+                var angle = Math.random() * Math.PI * 2;
+                var speed = 1 + Math.random() * 4;
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 1,
+                    life: 20 + Math.random() * 25,
+                    maxLife: 45,
+                    size: 2 + Math.random() * 4,
+                    color: color
+                });
+            }
+        }
+
+        function resetGame() {
+            player.x = 275;
+            player.y = 600;
+            obstacles = [];
+            coins = [];
+            particles = [];
+            score = 0;
+            lives = 3;
+            coinCount = 0;
+            gameRunning = true;
+            frameCount = 0;
+            document.getElementById('score').textContent = '0';
+            document.getElementById('lives').textContent = '3';
+            document.getElementById('coins').textContent = '0';
+        }
+
+        // Exposer resetGame globalement
+        window.resetGame = resetGame;
+
+        // ---- REDIMENSIONNEMENT ----
+        function resizeCanvas() {
+            var wrapper = canvas.parentElement;
+            var wrapperWidth = wrapper.clientWidth || 600;
+            var ratio = canvas.width / canvas.height;
+            var displayWidth = Math.min(wrapperWidth, 650);
+            var displayHeight = displayWidth / ratio;
+            canvas.style.width = displayWidth + 'px';
+            canvas.style.height = displayHeight + 'px';
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.resizeCanvas = resizeCanvas;
+
+        // ---- BOUCLE DE JEU ----
+        function update() {
+            if (!gameRunning) return;
+            frameCount++;
+
+            // Déplacement clavier
+            if (keys['ArrowLeft'] || keys['a']) player.x -= player.speed;
+            if (keys['ArrowRight'] || keys['d']) player.x += player.speed;
+            if (keys['ArrowUp'] || keys['w']) player.y -= player.speed * 0.7;
+            if (keys['ArrowDown'] || keys['s']) player.y += player.speed * 0.7;
+
+            // Déplacement souris
+            if (mouseX !== null) {
+                var diff = mouseX - player.x - player.w / 2;
+                player.x += diff * 0.12;
+            }
+
+            // Déplacement tactile
+            if (touchX !== null) {
+                var diff2 = touchX - player.x - player.w / 2;
+                player.x += diff2 * 0.12;
+            }
+
+            // Limites
+            player.x = Math.max(0, Math.min(canvas.width - player.w, player.x));
+            player.y = Math.max(0, Math.min(canvas.height - player.h, player.y));
+
+            // Spawn
+            if (frameCount % spawnRate === 0) spawnObstacle();
+            if (frameCount % (spawnRate * 2) === 0) spawnCoin();
+
+            // Obstacles
+            for (var i = obstacles.length - 1; i >= 0; i--) {
+                var o = obstacles[i];
+                o.y += o.speed;
+
+                // Collision
+                if (o.y + o.h > player.y && o.y < player.y + player.h &&
+                    o.x + o.w > player.x && o.x < player.x + player.w) {
+                    spawnParticles(player.x + player.w / 2, player.y + player.h / 2, '#ff4444', 20);
+                    lives--;
+                    document.getElementById('lives').textContent = lives;
+                    obstacles.splice(i, 1);
+
+                    if (lives <= 0) {
+                        gameRunning = false;
+                        if (score > 0) {
+                            var name = prompt('🏆 Score: ' + score + ' | 🪙 ' + coinCount + '\nTon pseudo :', 'PILOTE');
+                            if (name && name.trim()) {
+                                addScore(name.trim().toUpperCase(), score, coinCount);
+                            } else {
+                                addScore('ANON', score, coinCount);
+                            }
+                        }
+                    }
+                    continue;
+                }
+
+                if (o.y > canvas.height) {
+                    obstacles.splice(i, 1);
+                    if (gameRunning) {
+                        score++;
+                        document.getElementById('score').textContent = score;
+                    }
+                }
+            }
+
+            // Pièces
+            for (var j = coins.length - 1; j >= 0; j--) {
+                var c = coins[j];
+                c.y += c.speed;
+
+                if (!c.collected && c.y + c.size > player.y && c.y < player.y + player.h &&
+                    c.x + c.size > player.x && c.x < player.x + player.w) {
+                    c.collected = true;
+                    coinCount++;
+                    document.getElementById('coins').textContent = coinCount;
+                    spawnParticles(c.x, c.y, '#ffdd44', 10);
+                    coins.splice(j, 1);
+                    continue;
+                }
+
+                if (c.y > canvas.height) {
+                    coins.splice(j, 1);
+                }
+            }
+
+            // Particules
+            for (var k = particles.length - 1; k >= 0; k--) {
+                var p = particles[k];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.04;
+                p.life--;
+                if (p.life <= 0) particles.splice(k, 1);
+            }
+        }
+
+        function draw() {
+            // Fond
+            var grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            grad.addColorStop(0, '#0a1628');
+            grad.addColorStop(0.5, '#1a2a5a');
+            grad.addColorStop(1, '#2a4a7a');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Étoiles
+            for (var i = 0; i < 30; i++) {
+                var x = (i * 137 + i * 23) % canvas.width;
+                var y = (i * 89 + frameCount * 0.2 + i * 7) % canvas.height;
+                ctx.fillStyle = 'rgba(255,255,255,' + (0.1 + Math.sin(i + Date.now() * 0.001) * 0.05 + 0.05) + ')';
+                ctx.beginPath();
+                ctx.arc(x, y, 0.5 + Math.sin(i + Date.now() * 0.002) * 0.3 + 0.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Lignes de vol
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.lineWidth = 2;
+            for (var l = 0; l < 15; l++) {
+                var yy = (l * 50 + frameCount * 1.5) % canvas.height;
+                ctx.beginPath();
+                ctx.moveTo(0, yy);
+                ctx.lineTo(canvas.width, yy);
+                ctx.stroke();
+            }
+
+            // Pièces
+            for (var c = 0; c < coins.length; c++) {
+                var coin = coins[c];
+                ctx.shadowColor = '#ffdd44';
+                ctx.shadowBlur = 15;
+                ctx.fillStyle = '#ffdd44';
+                ctx.beginPath();
+                ctx.arc(coin.x, coin.y, coin.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = '#ff8800';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('$', coin.x, coin.y + 1);
+            }
+
+            // Obstacles
+            for (var o = 0; o < obstacles.length; o++) {
+                var obs = obstacles[o];
+                ctx.shadowColor = obs.color;
+                ctx.shadowBlur = 20;
+                ctx.fillStyle = obs.color;
+                ctx.shadowBlur = 0;
+                var r = 4;
+                ctx.beginPath();
+                ctx.moveTo(obs.x + r, obs.y);
+                ctx.lineTo(obs.x + obs.w - r, obs.y);
+                ctx.quadraticCurveTo(obs.x + obs.w, obs.y, obs.x + obs.w, obs.y + r);
+                ctx.lineTo(obs.x + obs.w, obs.y + obs.h - r);
+                ctx.quadraticCurveTo(obs.x + obs.w, obs.y + obs.h, obs.x + obs.w - r, obs.y + obs.h);
+                ctx.lineTo(obs.x + r, obs.y + obs.h);
+                ctx.quadraticCurveTo(obs.x, obs.y + obs.h, obs.x, obs.y + obs.h - r);
+                ctx.lineTo(obs.x, obs.y + r);
+                ctx.quadraticCurveTo(obs.x, obs.y, obs.x + r, obs.y);
+                ctx.closePath();
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(obs.x, obs.y, obs.w, obs.h);
+            }
+
+            // Particules
+            for (var p = 0; p < particles.length; p++) {
+                var part = particles[p];
+                var alpha = part.life / part.maxLife;
+                ctx.globalAlpha = alpha;
+                ctx.shadowColor = part.color;
+                ctx.shadowBlur = 8;
+                ctx.fillStyle = part.color;
+                ctx.beginPath();
+                ctx.arc(part.x, part.y, part.size * alpha, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+            ctx.shadowBlur = 0;
+
+            // ---- AVION ----
+            var px = player.x,
+                py = player.y,
+                pw = player.w,
+                ph = player.h;
+
+            // Effet lumineux
+            var glow = ctx.createRadialGradient(px + pw / 2, py + ph / 2, 5, px + pw / 2, py + ph / 2, 50);
+            glow.addColorStop(0, 'rgba(100, 200, 255, 0.05)');
+            glow.addColorStop(1, 'rgba(100, 200, 255, 0)');
+            ctx.fillStyle = glow;
+            ctx.fillRect(px - 30, py - 25, pw + 60, ph + 50);
+
+            // Corps
+            ctx.shadowColor = 'rgba(100, 200, 255, 0.15)';
+            ctx.shadowBlur = 20;
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.ellipse(px + pw / 2, py + ph / 2 - 5, 20, 15, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Ailes
+            ctx.shadowBlur = 10;
+            ctx.fillStyle = '#ff6b6b';
+            ctx.fillRect(px - 8, py + 10, 20, 8);
+            ctx.fillRect(px + 38, py + 10, 20, 8);
+
+            // Queue
+            ctx.fillStyle = '#ffd93d';
+            ctx.fillRect(px + 15, py + 32, 20, 6);
+
+            // Cockpit
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'rgba(100, 200, 255, 0.4)';
+            ctx.beginPath();
+            ctx.ellipse(px + 25, py + 5, 10, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Hélice
+            ctx.fillStyle = 'rgba(200, 200, 200, 0.3)';
+            var rot = frameCount * 0.5;
+            ctx.save();
+            ctx.translate(px + 25, py + 0);
+            ctx.rotate(rot);
+            ctx.fillRect(-12, -2, 24, 3);
+            ctx.fillRect(-2, -12, 3, 24);
+            ctx.restore();
+
+            // Lumières
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = '#ff0000';
+            ctx.shadowColor = '#ff0000';
+            ctx.beginPath();
+            ctx.arc(px + 3, py + 10, 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#00ff44';
+            ctx.shadowColor = '#00ff44';
+            ctx.beginPath();
+            ctx.arc(px + 47, py + 10, 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // GAME OVER
+            if (!gameRunning) {
+                ctx.fillStyle = 'rgba(0,0,0,0.6)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 48px Arial';
+                ctx.textAlign = 'center';
+                ctx.shadowColor = '#ff6b6b';
+                ctx.shadowBlur = 30;
+                ctx.fillText('💥 GAME OVER', canvas.width / 2, canvas.height / 2 - 20);
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = '#ffdd44';
+                ctx.font = '24px Arial';
+                ctx.fillText('Score: ' + score + '  🪙 ' + coinCount, canvas.width / 2, canvas.height / 2 + 50);
+                ctx.fillStyle = '#88aacc';
+                ctx.font = '16px Arial';
+                ctx.fillText('Clique sur "Rejouer" pour recommencer', canvas.width / 2, canvas.height / 2 + 100);
+            }
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // ============================================================
+        // LANCEMENT
+        // ============================================================
+        renderLB();
+        resizeCanvas();
+        gameLoop();
+
+        console.log('✈️ SKY PILOT - Jeu + Boutique Virement');
+        console.log('❤️ PayPal Dons: https://paypal.me/creatydesign');
+        console.log('🏦 IBAN Virement: BE80 9733 8252 3877');
+        console.log('🖱️ Souris pour diriger l\'avion');
+        console.log('⌨️ Flèches ou WASD pour diriger');
+    </script>
+
+</body>
+</html>
